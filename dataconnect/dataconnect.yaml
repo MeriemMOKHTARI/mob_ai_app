@@ -1,0 +1,12 @@
+specVersion: "v1beta"
+serviceId: "mobaiflutter"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "mobaiflutter-fdc"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]

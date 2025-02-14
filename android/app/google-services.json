@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "963036115114",
+    "project_id": "mobaiflutter-4231f",
+    "storage_bucket": "mobaiflutter-4231f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963036115114:android:835b69536a86741c37a0d3",
+        "android_client_info": {
+          "package_name": "com.example.mobaiflutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBv3Y6ajOqCXvJvyiXrCs3DlvdakEvvVA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
