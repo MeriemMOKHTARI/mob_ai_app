@@ -63,11 +63,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
-                  const Icon(
-                    Icons.favorite,
-                    color: Color(0xFF00A392),
-                  ),
-                  const SizedBox(width: 8),
+                 
                   const Text(
                     'Wishlist',
                     style: TextStyle(

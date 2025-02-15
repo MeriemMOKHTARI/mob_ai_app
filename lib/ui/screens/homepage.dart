@@ -6,6 +6,7 @@ import 'wishlist.dart';
 import 'purchase.dart';
 import 'profile.dart';
 import 'HomeContent.dart';
+import 'bot.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _screens = [
      HomeContent(),
      WishlistScreen(),
+     BotScreen(),
      PurchaseScreen(),
      Profile(),
   ];
@@ -43,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.white, // Change this to match the background
+        backgroundColor: Colors.transparent, // Change this to match the background
         color: const Color(0xFF00A392),
         buttonBackgroundColor: const Color(0xFF00A392),
         height: 60,
@@ -56,6 +58,7 @@ class _HomePageState extends State<HomePage> {
         items: const [
           Icon(Icons.home_outlined, color: Colors.white),
           Icon(Icons.favorite_outline, color: Colors.white),
+          Icon(Icons.smart_toy_outlined,color: Colors.white),
           Icon(Icons.chat_bubble_outline, color: Colors.white),
           Icon(Icons.person_outline, color: Colors.white),
         ],

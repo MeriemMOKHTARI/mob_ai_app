@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:mobaiflutter/ui/screens/BookDetailScreen.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'search_screen.dart';
 
 class HomeContent extends StatefulWidget {
@@ -10,10 +10,23 @@ class HomeContent extends StatefulWidget {
   State<HomeContent> createState() => _HomeContentState();
 }
 
-class _HomeContentState extends State<HomeContent> {
-  final List<String> categories = ['All', 'Thriller', 'Inspiration', 'Romance'];
-  int selectedCategoryIndex = 0;
+class _HomeContentState extends State<HomeContent> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   Set<String> favoriteBooks = {};
+
+  final List<String> categories = ['For you', 'Top sales', 'Top free', 'Mood'];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: categories.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   void toggleFavorite(String bookId) {
     setState(() {
@@ -28,338 +41,261 @@ class _HomeContentState extends State<HomeContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Bookini',
-          style: TextStyle(
-            color: Color(0xFF00A392),
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.black),
-            onPressed: () {},
-          ),
-                  IconButton(
-                    icon: const Icon(Icons.shopping_cart_outlined, color: Colors.black),
-                    onPressed: () {},
-                  ),
-        ],
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Search Box
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Hero(
-                tag: 'searchBar',
-                child: Material(
-                  color: Colors.transparent,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SearchScreen(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.grey[300]!),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 2,
-                            blurRadius: 15,
-                            offset: const Offset(0, 3),
+      backgroundColor: const Color(0xFF00A392),
+      body: Column(
+        children: [
+          // Custom AppBar
+          Container(
+            padding: const EdgeInsets.only(top: 50, left: 16, right: 16, bottom: 16),
+            decoration: const BoxDecoration(
+              color: Color(0xFF00A392),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+            ),
+            // color: const Color(0xFF00A392),
+            child: Column(
+              children: [
+                // Logo and notifications
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Image.asset('assets/logo.png', height: 60),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Bookini',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                // Search Bar
+                GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SearchScreen()),
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.auto_awesome, 
+                          color: Color(0xFF00A392),
+                          size: 20,
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          'Search a book with AI...',
+                          style: GoogleFonts.poppins(
+                            color: Colors.grey,
+                            fontSize: 15,
+                          ),
+                        ),
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
                             children: [
-                              const Icon(
-                                Icons.auto_awesome,
-                                size: 24,
-                                color: Color(0xFF00A392),
+                              const Icon(Icons.keyboard_arrow_up, 
+                                color: Colors.grey,
+                                size: 20,
                               ),
-                              const SizedBox(width: 12),
-                              const Expanded(
-                                child: Text(
-                                  'Search a book with AI...',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: const Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.keyboard_arrow_up,
-                                      size: 22,
-                                      color: Colors.grey,
-                                    ),
-                                    SizedBox(width: 8),
-                                    Icon(
-                                      Icons.mic,
-                                      size: 22,
-                                      color: Colors.grey,
-                                    ),
-                                  ],
-                                ),
+                              const SizedBox(width: 4),
+                              const Icon(Icons.mic, 
+                                color: Colors.grey,
+                                size: 20,
                               ),
                             ],
                           ),
-                          const SizedBox(height: 8),
-                          const Text(
-                            'Discover your next favorite book with our AI-powered search.',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
+              ],
+            ),
+          ),
+          // Tab Bar
+          Container(
+            color: Colors.white,
+            child: TabBar(
+              controller: _tabController,
+              isScrollable: true,
+              labelColor: const Color(0xFF00A392),
+              unselectedLabelColor: Colors.grey,
+              labelStyle: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+              unselectedLabelStyle: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+              indicatorColor: const Color(0xFF00A392),
+              tabs: categories.map((category) => Tab(
+                text: category,
+              )).toList(),
+            ),
+          ),
+          // Tab Bar View
+          Expanded(
+            child: Container(
+              color: Colors.white,
+              child: TabBarView(
+                controller: _tabController,
+                children: categories.map((category) {
+                  return _buildBookGrid(category);
+                }).toList(),
               ),
             ),
-            // Categories
-            Container(
-              height: 50,
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: categories.length,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategoryIndex = index;
-                      });
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: BoxDecoration(
-                        color: selectedCategoryIndex == index
-                            ? const Color(0xFF00A392)
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(
-                          color: const Color(0xFF00A392),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          categories[index],
-                          style: TextStyle(
-                            color: selectedCategoryIndex == index
-                                ? Colors.white
-                                : const Color(0xFF00A392),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            // Content
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                children: [
-                  _buildSection('Recommended for you'),
-                  _buildSection('Best sellers'),
-                  _buildSection('Best free'),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildSection(String title) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _buildBookGrid(String category) {
+    return GridView.builder(
+      padding: const EdgeInsets.all(16),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 0.65,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+      ),
+      itemCount: 6, // Adjust as needed
+      itemBuilder: (context, index) {
+        final bookId = '${category}_$index';
+        return _buildBookCard(bookId);
+      },
+    );
+  }
+
+  Widget _buildBookCard(String bookId) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
             children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                child: Image.network(
+                  'https://picsum.photos/200/280',
+                  height: 180,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BookDetailScreen(sectionTitle: title),
+              Positioned(
+                top: 8,
+                right: 8,
+                child: GestureDetector(
+                  onTap: () => toggleFavorite(bookId),
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
                     ),
-                  );
-                },
-                child: const Text(
-                  'More',
-                  style: TextStyle(
-                    color: Color(0xFF00A392),
+                    child: Icon(
+                      favoriteBooks.contains(bookId)
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: favoriteBooks.contains(bookId)
+                          ? Colors.red
+                          : Colors.grey,
+                      size: 18,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-        ),
-        SizedBox(
-          height: 280,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              final bookId = 'book_${title}_$index';
-              return Container(
-                width: 160,
-                margin: const EdgeInsets.only(right: 16),
-                child: Stack(
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Book Title',
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  'Author Name',
+                  style: GoogleFonts.poppins(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Row(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 200,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                spreadRadius: 1,
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                            image: const DecorationImage(
-                              image: NetworkImage('https://picsum.photos/160/200'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        const Text(
-                          'Book Title',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const Text(
-                          'Author Name',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            RatingBar.builder(
-                              initialRating: 4,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemSize: 16,
-                              itemBuilder: (context, _) => const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              onRatingUpdate: (rating) {},
-                            ),
-                            const SizedBox(width: 4),
-                            const Text(
-                              '4.0',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                    RatingBar.builder(
+                      initialRating: 4,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 12,
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {},
                     ),
-                    // Favorite Button
-                    Positioned(
-                      top: 8,
-                      right: 8,
-                      child: GestureDetector(
-                        onTap: () => toggleFavorite(bookId),
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                spreadRadius: 1,
-                                blurRadius: 2,
-                                offset: const Offset(0, 1),
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            favoriteBooks.contains(bookId)
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color:
-                                favoriteBooks.contains(bookId) ? Colors.red : Colors.grey,
-                            size: 20,
-                          ),
-                        ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '4.0',
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        color: Colors.grey,
                       ),
                     ),
                   ],
                 ),
-              );
-            },
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
-
