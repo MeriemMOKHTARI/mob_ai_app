@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mobaiflutter/ui/screens/homepage.dart';
-import 'package:mobaiflutter/ui/screens/sign_in_screen.dart'; // Remplace par le bon chemin de ton fichier
+import 'package:mobaiflutter/ui/screens/sign_in_screen.dart';
+import 'package:mobaiflutter/ui/screens/splashscreen.dart'; // Remplace par le bon chemin de ton fichier
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(), // Remplace par ton écran de connexion
+      home:HomePage(),
+      //  SplashScreen(),
     );
   }
 }
+

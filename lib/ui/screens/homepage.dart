@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+
 // Import your other screen files
-import 'wishlist.dart';
-import 'purchase.dart';
+import 'my_books.dart';
+import 'CartScreen.dart';
 import 'profile.dart';
 import 'HomeContent.dart';
 import 'bot.dart';
@@ -21,9 +24,9 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _screens = [
      HomeContent(),
-     WishlistScreen(),
-     BotScreen(),
-     PurchaseScreen(),
+     MyBooksScreen(),
+     PurchaseBotScreen(),
+     CartScreen(),
      Profile(),
   ];
 
@@ -57,9 +60,9 @@ class _HomePageState extends State<HomePage> {
         },
         items: const [
           Icon(Icons.home_outlined, color: Colors.white),
-          Icon(Icons.favorite_outline, color: Colors.white),
+          Icon(Icons.menu_book_outlined, color: Colors.white),
           Icon(Icons.smart_toy_outlined,color: Colors.white),
-          Icon(Icons.chat_bubble_outline, color: Colors.white),
+          Icon(Icons.shopping_cart_outlined, color: Colors.white),
           Icon(Icons.person_outline, color: Colors.white),
         ],
       ),

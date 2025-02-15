@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'search_results_screen.dart';
 
@@ -80,21 +81,28 @@ class _SearchScreenState extends State<SearchScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Bookini',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                  Row(
+                    children: [
+                      Image.asset('assets/logo.png', height: 30),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Bookini',
+                        style: GoogleFonts.poppins(
+                          color: Color(0xFF00A392),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.notifications_outlined,
+                      color: Colors.black,
+                      size: 20,
                     ),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.notifications_outlined),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.shopping_cart_outlined),
                     onPressed: () {},
                   ),
                 ],
@@ -179,4 +187,3 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
-

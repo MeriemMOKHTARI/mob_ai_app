@@ -142,6 +142,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -206,6 +207,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ),
